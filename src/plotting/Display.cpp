@@ -1,4 +1,4 @@
-#include "Display.h"
+#include "Display.hpp"
 #include <iostream>
 
 Display::Display(/* args */): mScreenWidth(1800), mScreenHeight(980)
@@ -9,7 +9,7 @@ Display::Display(/* args */): mScreenWidth(1800), mScreenHeight(980)
         std::cout << "Window not created " << SDL_GetError() << std::endl;
     }
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
-    
+
 }
 
 Display::~Display()
@@ -35,4 +35,9 @@ SDL_Window *Display::getWindow() const
 SDL_Renderer *Display::getRenderer() const
 {
     return mRenderer;
+}
+
+void Display::drawLine(const Point2D& startPos, const Point2D& endPos)
+{
+    SDL_RenderDrawLine(mRenderer,startPos.x,startPos.y, endPos.x, endPos.y);
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL2/SDL.h"
 #include <memory>
+#include "../utility.hpp"
 
 class Display
 {
@@ -14,6 +15,8 @@ public:
 
     SDL_Window *getWindow() const;
     SDL_Renderer *getRenderer() const;
+    
+    void drawLine(const Point2D& startPos, const Point2D& endPos);
 
 private:
     int mScreenWidth;

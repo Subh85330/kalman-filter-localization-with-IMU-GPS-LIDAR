@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 project(KFS)
 
-find_package(SDl)
+set(SRC_CPP
+    src/plotting/Display.cpp
+    src/robot/Robot.cpp
 
-add_executable(${PROJECT_NAME} main.cpp src/plotting/Display.cpp)
+)
+add_executable(${PROJECT_NAME} main.cpp ${SRC_CPP})
 
 target_link_libraries(${PROJECT_NAME} SDL2)
