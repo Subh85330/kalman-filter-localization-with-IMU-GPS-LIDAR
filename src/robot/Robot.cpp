@@ -2,7 +2,8 @@
 
 Robot::Robot()
 {
-    mRobotBody = {{100,0.00},{500.0,500.0}};
+    mRobotBody = {{0.0,0.0},{50.0,0.0},{50,30},{0.0,30.0},{0,0}};
+    // mRobotBody = {{}};
 }
 
 Robot::~Robot()
@@ -10,8 +11,7 @@ Robot::~Robot()
 
 }
 
-
 void Robot::render(std::shared_ptr<Display> disp)
 {
-    disp->drawLine(mRobotBody[0], mRobotBody[1]);
+    disp->drawLines(mRobotBody);
 }

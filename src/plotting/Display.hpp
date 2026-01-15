@@ -1,6 +1,13 @@
 #pragma once
-#include "SDL2/SDL.h"
+
+// System
 #include <memory>
+#include <vector>
+
+// External
+#include "SDL2/SDL.h"
+
+// User Defined
 #include "../utility.hpp"
 
 class Display
@@ -17,6 +24,8 @@ public:
     SDL_Renderer *getRenderer() const;
     
     void drawLine(const Point2D& startPos, const Point2D& endPos);
+    void drawLines(const std::vector<Point2D>& dataPoint2D);
+
 
 private:
     int mScreenWidth;

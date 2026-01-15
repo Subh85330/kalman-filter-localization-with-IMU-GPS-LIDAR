@@ -1,7 +1,8 @@
-#include "Display.hpp"
 #include <iostream>
 
-Display::Display(/* args */): mScreenWidth(1800), mScreenHeight(980)
+#include "Display.hpp"
+
+Display::Display(/* args */) : mScreenWidth(1800), mScreenHeight(980)
 {
     mWindow = SDL_CreateWindow("Kalman Filters Sim", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mScreenWidth, mScreenHeight, SDL_WINDOW_SHOWN);
     if (!mWindow)
@@ -9,14 +10,13 @@ Display::Display(/* args */): mScreenWidth(1800), mScreenHeight(980)
         std::cout << "Window not created " << SDL_GetError() << std::endl;
     }
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
-
 }
 
 Display::~Display()
 {
-        SDL_DestroyRenderer(mRenderer);
-        SDL_DestroyWindow(mWindow);
-        SDL_Quit();
+    SDL_DestroyRenderer(mRenderer);
+    SDL_DestroyWindow(mWindow);
+    SDL_Quit();
 }
 
 void Display::setWindow(SDL_Window *win)
@@ -37,7 +37,18 @@ SDL_Renderer *Display::getRenderer() const
     return mRenderer;
 }
 
-void Display::drawLine(const Point2D& startPos, const Point2D& endPos)
+void Display::drawLine(const Point2D &startPos, const Point2D &endPos)
 {
-    SDL_RenderDrawLine(mRenderer,startPos.x,startPos.y, endPos.x, endPos.y);
+    SDL_RenderDrawLine(mRenderer, startPos.x, startPos.y, endPos.x, endPos.y);
+}
+
+void Display::drawLines(const std::vector<Point2D> &dataPoint2D)
+{
+    if (dataPoint2D.size() > 1)
+    {
+        for (int i = 0; i < dataPoint2D.size() - 1; ++i)
+        {
+            drawLine(dataPoint2D[i], dataPoint2D[i + 1]);
+        }
+    }
 }
