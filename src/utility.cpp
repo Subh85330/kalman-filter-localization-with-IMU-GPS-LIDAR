@@ -10,13 +10,19 @@ double wrapAngle(double angle)
     return angle;
 }
 
-std::vector<Point2D> transformPoints(std::vector<Point2D> data, double x, double y, double rot)
+
+std::vector<Point2D> transformPoints(std::vector<Point2D> points, double x, double y, double rot)
 {
-    std::for_each(std::begin(data), std::end(data), [&](Point2D& p){
+    std::for_each(std::begin(points), std::end(points), [&](Point2D& p){
         auto xNew = p.x*cos(rot) - p.y*sin(rot) + x;
-        auto yNew = p.x*sin(rot) + p.y*cos(rot) + y;
+        p.y = p.x*sin(rot) + p.y*cos(rot) + y;
         p.x=xNew;
-        p.y=yNew;
+
     });
-    return data;
+    return points;
+}
+
+std::vector<Point2D> transformPoints(std::vector<Point2D> points, Point2D point, double rot)
+{
+    return transformPoints(points, point.x, point.y, rot);
 }

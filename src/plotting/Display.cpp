@@ -75,27 +75,27 @@ void Display::showDisplay()
 
 void Display::processInput()
 {
-    SDL_Event event;
-    while (SDL_PollEvent(&event) != 0)
-    {
-        if (event.type == SDL_QUIT)
-        {
-            mIsRunning = false;
-        }
-        else if (event.type == SDL_KEYDOWN)
-        {
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_ESCAPE:
-                mIsRunning = false;
-                break;
-            case SDLK_i:
+    // SDL_Event event;
+    // while (SDL_PollEvent(&event) != 0)
+    // {
+    //     if (event.type == SDL_QUIT)
+    //     {
+    //         mIsRunning = false;
+    //     }
+    //     else if (event.type == SDL_KEYDOWN)
+    //     {
+    //         switch (event.key.keysym.sym)
+    //         {
+    //         case SDLK_ESCAPE:
+    //             mIsRunning = false;
+    //             break;
+    //         case SDLK_i:
 
-            default:
-                break;
-            }
-        }
-    }
+    //         default:
+    //             break;
+    //         }
+    //     }
+    // }
 }
 
 void Display::resetDisplay()

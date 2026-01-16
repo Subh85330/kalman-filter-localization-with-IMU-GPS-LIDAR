@@ -2,12 +2,14 @@
 #include <cmath>
 #include "../utility.hpp"
 
-Bicycle::Bicycle(/* args */):mWheelBase(25),mVelocity(0.1),mSteering(0.1)
+Bicycle::Bicycle(/* args */):mWheelBase(25),mVelocity(0.0),mSteering(0.0)
 {
+    
 }
 
 Bicycle::~Bicycle()
 {
+
 }
 
 void Bicycle::update(double dt)
