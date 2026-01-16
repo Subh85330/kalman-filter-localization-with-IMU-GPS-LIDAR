@@ -6,6 +6,7 @@ set(SRC_CPP
     src/plotting/Display.cpp
     src/robot/Robot.cpp
     src/robot/Bicycle.cpp
+    src/robot/Simulation.cpp
     src/utility.cpp
 
 )

@@ -100,6 +100,6 @@ void Display::processInput()
 
 void Display::resetDisplay()
 {
-    setDrawColor(255, 255, 255, 255);
+    setDrawColor(100, 100, 100, 100);
     SDL_RenderClear(mRenderer);
 }

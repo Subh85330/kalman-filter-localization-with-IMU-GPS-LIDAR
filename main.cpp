@@ -1,7 +1,8 @@
 #include <iostream>
 #include "src/plotting/Display.hpp"
 #include <thread>
-#include "src/robot/Robot.hpp"
+// #include "src/robot/Robot.hpp"
+#include "src/robot/Simulation.hpp"
 void AtExit()
 {
     std::cout << "End Of Program!!!!\n";
@@ -10,15 +11,15 @@ void AtExit()
 int main()
 {
     std::atexit(AtExit);
-    auto robot = Robot();
+    auto sim = std::make_shared<Simulation>();
     std::shared_ptr<Display> disp = std::make_shared<Display>();
 
     while (disp->getIsRunning())
     {
-        robot.update(0.1);
+        sim->update();
         disp->resetDisplay();
         disp->setDrawColor(0, 0, 0, 0);
-        robot.render(disp);
+        sim->render(disp);
         disp->showDisplay();
         // disp->processInput();
 
@@ -39,16 +40,20 @@ int main()
                 case SDLK_i:
                     break;
                 case SDLK_UP:
-                    robot.setVelocity(robot.getVelocity() + 0.1);
+                    sim->setVelocity(sim->getVelocity() + 0.1);
                     break;
                 case SDLK_DOWN:
-                    robot.setVelocity(robot.getVelocity() - 0.1);
+                    sim->setVelocity(sim->getVelocity() - 0.1);
                     break;
                 case SDLK_RIGHT:
-                    robot.setSteering(robot.getSteering() + 0.1);
+                    sim->setSteering(sim->getSteering() + 0.05);
                     break;
                 case SDLK_LEFT:
-                    robot.setSteering(robot.getSteering() - 0.1);
+                    sim->setSteering(sim->getSteering() - 0.05);
+                    break;
+                case SDLK_s:
+                    sim->setVelocity(0);
+                    sim->setSteering(0);
                     break;
 
                 default:

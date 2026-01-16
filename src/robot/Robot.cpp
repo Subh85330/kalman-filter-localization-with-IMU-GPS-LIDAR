@@ -5,18 +5,20 @@ Robot::Robot() : mBicycleModel(),mRobotCurrentState()
     mRobotLength = 50.0;
     mRobotWidth = 30.0;
     mRobotWheelBase = 40.0;
-    mRobotBody = {{0.0,0.0},
-                  {mRobotLength,0.0},
-                  {mRobotLength, mRobotWidth},
-                  {0.0, mRobotWidth},
-                  {0,0}};
+    mRobotBody = {{-mRobotLength/2,mRobotWidth/2},
+                  {mRobotLength/2,mRobotWidth/2},
+                  {mRobotLength,0},
+                  {mRobotLength/2, -mRobotWidth/2},
+                  {-mRobotLength/2, -mRobotWidth/2},
+                  {-mRobotLength/2,mRobotWidth/2}};
     // mRobotBody = {{}};
-    mWheelDims = {{0,0},{10,0},{10,5},{0,5},{0,0}};
+    mWheelDims = {{-5,-2.5},{5,-2.5},{5,2.5},{-5,2.5},{-5,-2.5}};
     
-    mLFWheelOffset = {40,30};
-    mRFWheelOffset = {40,-5};
-    mLRWheelOffset = {0,30};
-    mRRWheelOffset = {0,-5};
+    mLFWheelOffset = {mRobotLength/2, -mRobotWidth/2};
+    mRFWheelOffset = {mRobotLength/2,mRobotWidth/2};
+
+    mLRWheelOffset = {-mRobotLength/2,-mRobotWidth/2};
+    mRRWheelOffset = {-mRobotLength/2,mRobotWidth/2};
 }
 
 Robot::~Robot()
@@ -45,7 +47,10 @@ double Robot::getSteering()
     return mBicycleModel.getSteering();
 }
 
-
+RobotState Robot::getRobotCurrentState() const
+{
+    return mRobotCurrentState;
+}
 
 void Robot::update(double dt)
 {

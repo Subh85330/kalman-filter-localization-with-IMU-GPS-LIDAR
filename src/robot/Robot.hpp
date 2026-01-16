@@ -16,6 +16,7 @@ public:
     void setSteering(double steering);
     double getVelocity();
     double getSteering();
+    RobotState getRobotCurrentState() const;
 
     void update(double dt);
     void render(std::shared_ptr<Display> disp);
