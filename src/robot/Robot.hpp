@@ -3,9 +3,7 @@
 
 #include "../plotting/Display.hpp"
 #include "../utility.hpp"
-
 #include "Bicycle.hpp"
-
 
 class Robot
 {
@@ -17,7 +15,6 @@ public:
     double getVelocity();
     double getSteering();
     RobotState getRobotCurrentState() const;
-
     void update(double dt);
     void render(std::shared_ptr<Display> disp);
 
