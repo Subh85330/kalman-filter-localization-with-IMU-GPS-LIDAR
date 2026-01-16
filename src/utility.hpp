@@ -1,5 +1,5 @@
 #pragma once
-
+#include <vector>
 struct Point2D
 {
     double x,y;
@@ -7,3 +7,6 @@ struct Point2D
     {}
     Point2D(double _x, double _y):x(_x),y(_y){};
 };
+double wrapAngle(double angle);
+
+std::vector<Point2D> transformPoints(std::vector<Point2D> data, double x, double y, double rot);

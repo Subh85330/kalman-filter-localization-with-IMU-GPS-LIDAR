@@ -2,7 +2,7 @@
 
 #include "Display.hpp"
 
-Display::Display(/* args */) : mScreenWidth(1800), mScreenHeight(980)
+Display::Display(/* args */) : mScreenWidth(1800), mScreenHeight(980), mIsRunning(1)
 {
     mWindow = SDL_CreateWindow("Kalman Filters Sim", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mScreenWidth, mScreenHeight, SDL_WINDOW_SHOWN);
     if (!mWindow)
@@ -10,6 +10,7 @@ Display::Display(/* args */) : mScreenWidth(1800), mScreenHeight(980)
         std::cout << "Window not created " << SDL_GetError() << std::endl;
     }
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Init(SDL_INIT_VIDEO);
 }
 
 Display::~Display()
@@ -28,6 +29,16 @@ void Display::setRenderer(SDL_Renderer *renderer)
     mRenderer = renderer;
 }
 
+void Display::setIsRunning(const bool &isRunning)
+{
+    mIsRunning = isRunning;
+}
+
+void Display::setDrawColor(int r, int g, int b, int alpha)
+{
+    SDL_SetRenderDrawColor(mRenderer, r, g, b, alpha);
+}
+
 SDL_Window *Display::getWindow() const
 {
     return mWindow;
@@ -35,6 +46,10 @@ SDL_Window *Display::getWindow() const
 SDL_Renderer *Display::getRenderer() const
 {
     return mRenderer;
+}
+bool Display::getIsRunning() const
+{
+    return mIsRunning;
 }
 
 void Display::drawLine(const Point2D &startPos, const Point2D &endPos)
@@ -51,4 +66,40 @@ void Display::drawLines(const std::vector<Point2D> &dataPoint2D)
             drawLine(dataPoint2D[i], dataPoint2D[i + 1]);
         }
     }
+}
+
+void Display::showDisplay()
+{
+    SDL_RenderPresent(mRenderer);
+}
+
+void Display::processInput()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_QUIT)
+        {
+            mIsRunning = false;
+        }
+        else if (event.type == SDL_KEYDOWN)
+        {
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                mIsRunning = false;
+                break;
+            case SDLK_i:
+
+            default:
+                break;
+            }
+        }
+    }
+}
+
+void Display::resetDisplay()
+{
+    setDrawColor(255, 255, 255, 255);
+    SDL_RenderClear(mRenderer);
 }
