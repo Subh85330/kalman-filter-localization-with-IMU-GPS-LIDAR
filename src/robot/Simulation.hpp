@@ -1,6 +1,8 @@
 #pragma once
-
+#include "../kalmanFilters/LinearKalmanFilter.hpp"
 #include "Robot.hpp"
+#include "sensors/GPSSensor.hpp"
+
 
 class Simulation
 {
@@ -19,7 +21,10 @@ public:
 
 private:
     std::shared_ptr<Robot> mRobotSptr;
+    std::shared_ptr<LinearKalmanFilter> mkf;
+    std::shared_ptr<GPSSensor> mGPSSensor;
     std::vector<Point2D> mTrueTrajHistory;
+    std::vector<Point2D> mEstimatedTrajHistory;
 
     double dt;
 };

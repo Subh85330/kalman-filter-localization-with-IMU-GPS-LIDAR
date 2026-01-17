@@ -2,7 +2,7 @@
 
 #include "Display.hpp"
 
-Display::Display(/* args */) : mScreenWidth(1800), mScreenHeight(980), mIsRunning(1)
+Display::Display() : mScreenWidth(1800), mScreenHeight(980), mIsRunning(1)
 {
     mWindow = SDL_CreateWindow("Kalman Filters Sim", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mScreenWidth, mScreenHeight, SDL_WINDOW_SHOWN);
     if (!mWindow)

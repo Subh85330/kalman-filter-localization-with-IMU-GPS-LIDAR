@@ -1,6 +1,6 @@
 #include "Robot.hpp"
 
-Robot::Robot() : mBicycleModel(),mRobotCurrentState()
+Robot::Robot() : mBicycleModel(),mRobotCurrentState(100,100,0)
 {
     mRobotLength = 50.0;
     mRobotWidth = 30.0;

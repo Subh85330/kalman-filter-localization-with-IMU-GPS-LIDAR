@@ -1,7 +1,7 @@
 #include "KalmanFilterBase.hpp"
 
 
-KalmanFilterBase::KalmanFilterBase(/* args */)
+KalmanFilterBase::KalmanFilterBase()
 {
 }
 
@@ -9,12 +9,12 @@ KalmanFilterBase::~KalmanFilterBase()
 {
 }
 
-inline void KalmanFilterBase::setStateVec(const VectorXd &stateVec)
+void KalmanFilterBase::setStateVec(const VectorXd &stateVec)
 {
     mStateVec = stateVec;
 }
 
-void KalmanFilterBase::setCov(const VectorXd &covariance)
+void KalmanFilterBase::setCov(const MatrixXd &covariance)
 {
     mCov = covariance;
 }
