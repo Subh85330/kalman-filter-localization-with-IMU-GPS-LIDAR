@@ -3,6 +3,27 @@
 #include "Robot.hpp"
 #include "sensors/GPSSensor.hpp"
 
+struct SimulationParams
+{
+    double mTimeNow, mTimeStep;
+
+    // Gyro / Prediction
+    double mGyroUpdateRate, mGyroUpdateRemTime;
+    bool mGyroEnabled;
+
+    // GPS
+    double mGpsUpdateRate, mGpsUpdateRemTime;
+    bool mGpsEnabled;
+
+
+    SimulationParams()
+    :mTimeNow(0.0),mTimeStep(0.1),
+    mGyroUpdateRate(10.0),mGyroUpdateRemTime(0.0),mGyroEnabled(true),
+    mGpsUpdateRate(1.0),mGpsUpdateRemTime(0.0),mGpsEnabled(true)
+    {}
+};
+
+
 
 class Simulation
 {
@@ -20,11 +41,11 @@ public:
     void render(std::shared_ptr<Display> disp);
 
 private:
+    std::unique_ptr<SimulationParams> mSimParamsUptr;
     std::shared_ptr<Robot> mRobotSptr;
     std::shared_ptr<LinearKalmanFilter> mkf;
     std::shared_ptr<GPSSensor> mGPSSensor;
     std::vector<Point2D> mTrueTrajHistory;
     std::vector<Point2D> mEstimatedTrajHistory;
 
-    double dt;
 };
