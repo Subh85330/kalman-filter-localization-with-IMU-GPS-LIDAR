@@ -2,7 +2,7 @@
 
 #include "Display.hpp"
 
-Display::Display() : mScreenWidth(1800), mScreenHeight(980), mIsRunning(1)
+Display::Display() : mScreenWidth(1060), mScreenHeight(980), mIsRunning(1), mViewHeight(mScreenHeight), mViewWidth(mScreenWidth), mViewXOffset(0.0), mViewYOffset(0.0)
 {
     mWindow = SDL_CreateWindow("Kalman Filters Sim", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mScreenWidth, mScreenHeight, SDL_WINDOW_SHOWN);
     if (!mWindow)
@@ -51,10 +51,16 @@ bool Display::getIsRunning() const
 {
     return mIsRunning;
 }
+double Display::getScreenAspectRation() const
+{
+    return mScreenWidth / mScreenHeight;
+}
 
 void Display::drawLine(const Point2D &startPos, const Point2D &endPos)
 {
-    SDL_RenderDrawLine(mRenderer, startPos.x, startPos.y, endPos.x, endPos.y);
+    Point2D p1 = transformPoint(startPos);
+    Point2D p2 = transformPoint(endPos);
+    SDL_RenderDrawLine(mRenderer, p1.x, p1.y, p2.x, p2.y);
 }
 
 void Display::drawLines(const std::vector<Point2D> &dataPoint2D)
@@ -66,6 +72,34 @@ void Display::drawLines(const std::vector<Point2D> &dataPoint2D)
             drawLine(dataPoint2D[i], dataPoint2D[i + 1]);
         }
     }
+}
+
+void Display::drawLines(const std::vector<std::vector<Point2D>> &dataPoint2D)
+{
+    if (dataPoint2D.size() > 1)
+    {
+        for (int i = 0; i < dataPoint2D.size() - 1; ++i)
+        {
+            drawLines(dataPoint2D[i]);
+        }
+    }
+}
+
+Point2D Display::transformPoint(Point2D point)
+{
+    double dx = point.x - mViewXOffset;
+    double dy = point.y - mViewYOffset;
+    double y = mScreenHeight - (dx / mViewHeight) * mScreenHeight;
+    double x = (dy / mViewWidth) * mScreenWidth;
+    return Point2D(x, y);
+}
+
+void Display::setView(double width, double height, double xOffSet, double yOffset)
+{
+    mViewWidth = width;
+    mViewHeight = height;
+    mViewXOffset = xOffSet-mViewHeight/2.0;
+    mViewYOffset = yOffset-mViewWidth/2.0;
 }
 
 void Display::showDisplay()

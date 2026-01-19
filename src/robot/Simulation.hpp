@@ -2,6 +2,14 @@
 #include "../kalmanFilters/LinearKalmanFilter.hpp"
 #include "Robot.hpp"
 #include "sensors/GPSSensor.hpp"
+#include "../plotting/Grid.hpp"
+
+enum class SimStatus
+{
+    NOT_STARTED,
+    RUNNING,
+    FINISHED
+};
 
 struct SimulationParams
 {
@@ -34,6 +42,9 @@ public:
 
     void setVelocity(const double &vel);
     void setSteering(const double &steer);
+    void increaseViewSize();
+    void decreaseViewSize();
+    void togglePause();
 
     double getVelocity() const;
     double getSteering() const;
@@ -41,7 +52,11 @@ public:
     void render(std::shared_ptr<Display> disp);
 
 private:
+    SimStatus mSimStatus;
+    bool mIsPaused;
+    double mViewSize;
     std::unique_ptr<SimulationParams> mSimParamsUptr;
+    std::unique_ptr<Grid> mGrid;
     std::shared_ptr<Robot> mRobotSptr;
     std::shared_ptr<LinearKalmanFilter> mkf;
     std::shared_ptr<GPSSensor> mGPSSensor;

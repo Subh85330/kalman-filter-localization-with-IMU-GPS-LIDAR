@@ -51,9 +51,19 @@ int main()
                 case SDLK_LEFT:
                     sim->setSteering(sim->getSteering() - 0.05);
                     break;
+                case SDLK_SPACE:
+                    sim->togglePause();
+                    break;
                 case SDLK_s:
+                    // to stop vehicle
                     sim->setVelocity(0);
                     sim->setSteering(0);
+                    break;
+                case SDLK_MINUS:
+                    sim->decreaseViewSize();
+                    break;
+                case SDLK_EQUALS:
+                    sim->increaseViewSize();
                     break;
 
                 default:
