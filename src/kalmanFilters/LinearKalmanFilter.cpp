@@ -7,7 +7,7 @@ constexpr double INIT_VEL_STD = 15;
 constexpr double ACCEL_STD = 0.1;
 constexpr double GPS_POS_STD = 3.0;
 
-LinearKalmanFilter::LinearKalmanFilter() : mIsInitilized(false)
+LinearKalmanFilter::LinearKalmanFilter()
 {
 }
 
@@ -17,7 +17,7 @@ LinearKalmanFilter::~LinearKalmanFilter()
 
 void LinearKalmanFilter::predictionStep(const double &dt)
 {
-    if (!mIsInitilized)
+    if (!getIsInitilized())
     {
         VectorXd state = Vector4d::Zero();
         state << 100, 100, 0.1, 0;
@@ -26,7 +26,7 @@ void LinearKalmanFilter::predictionStep(const double &dt)
         cov(1, 1) = INIT_POS_STD * INIT_POS_STD;
         cov(2, 2) = INIT_VEL_STD * INIT_VEL_STD;
         cov(3, 3) = INIT_VEL_STD * INIT_VEL_STD;
-        mIsInitilized = true;
+        setIsInitilized(true);
         setStateVec(state);
         setCov(cov);
     }
@@ -54,7 +54,7 @@ void LinearKalmanFilter::predictionStep(const double &dt)
 
 void LinearKalmanFilter::handleGPSMeasurement(GPSMeasurement meas)
 {
-    if (mIsInitilized)
+    if (getIsInitilized())
     {
         auto state = getStateVec();
         auto cov = getCov();
@@ -81,11 +81,4 @@ void LinearKalmanFilter::handleGPSMeasurement(GPSMeasurement meas)
     }
 }
 
-void LinearKalmanFilter::setIsInitilized(bool flag)
-{
-}
 
-bool LinearKalmanFilter::getIsInitilized() const
-{
-    return mIsInitilized;
-}

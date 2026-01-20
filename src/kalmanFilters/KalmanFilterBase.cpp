@@ -1,7 +1,7 @@
 #include "KalmanFilterBase.hpp"
 
 
-KalmanFilterBase::KalmanFilterBase()
+KalmanFilterBase::KalmanFilterBase() : mIsInitilized(false)
 {
 }
 
@@ -27,4 +27,19 @@ VectorXd KalmanFilterBase::getStateVec() const
 MatrixXd KalmanFilterBase::getCov() const
 {
     return mCov;
+}
+
+void KalmanFilterBase::setIsInitilized(bool flag)
+{
+    mIsInitilized = flag;
+}
+
+bool KalmanFilterBase::getIsInitilized() const
+{
+    return mIsInitilized;
+}
+
+void KalmanFilterBase::handleGPSMeasurement(GPSMeasurement meas)
+{
+
 }

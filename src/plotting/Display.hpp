@@ -40,6 +40,9 @@ public:
 
     void resetDisplay();
 
+    void generateGrid();
+    void renderGrid();
+
 private:
     int mScreenWidth;
     int mScreenHeight;
@@ -51,5 +54,7 @@ private:
 
     SDL_Window *mWindow;
     SDL_Renderer *mRenderer;
+    SDL_Texture *gridTexture;
+    
     bool mIsRunning;
 };

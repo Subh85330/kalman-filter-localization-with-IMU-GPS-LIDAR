@@ -12,6 +12,7 @@ set(SRC_CPP
     src/utility.cpp
     src/kalmanFilters/KalmanFilterBase.cpp
     src/kalmanFilters/LinearKalmanFilter.cpp
+    src/kalmanFilters/ExtendedKF.cpp
 
 
 )

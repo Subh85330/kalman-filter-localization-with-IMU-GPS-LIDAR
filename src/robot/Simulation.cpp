@@ -1,12 +1,14 @@
 #include "Simulation.hpp"
 #include <iostream>
 
+#include "../kalmanFilters/ExtendedKF.hpp"
+
 Simulation::Simulation() : mViewSize(500), mSimStatus(SimStatus::NOT_STARTED)
 {
     mSimParamsUptr = std::make_unique<SimulationParams>();
     mGrid = std::make_unique<Grid>();
     mRobotSptr = std::make_shared<Robot>();
-    mkf = std::make_shared<LinearKalmanFilter>();
+    mKF = std::make_shared<LinearKalmanFilter>();
     mGPSSensor = std::make_shared<GPSSensor>();
 }
 
@@ -26,7 +28,7 @@ void Simulation::update()
         {
             if (mSimParamsUptr->mGyroUpdateRemTime <= 0)
             {
-                mkf->predictionStep(mSimParamsUptr->mTimeStep);
+                mKF->predictionStep(mSimParamsUptr->mTimeStep);
                 mSimParamsUptr->mGyroUpdateRate += 1.0 / mSimParamsUptr->mGyroUpdateRate;
             }
             mSimParamsUptr->mGyroUpdateRemTime -= mSimParamsUptr->mTimeStep;
@@ -37,8 +39,8 @@ void Simulation::update()
             if (mSimParamsUptr->mGpsUpdateRemTime <= 0)
             {
                 auto meas = mGPSSensor->generateGPSMeasurements(robotCurrentState.x, robotCurrentState.y);
-                mkf->handleGPSMeasurement(meas);
-                auto st = mkf->getStateVec();
+                mKF->handleGPSMeasurement(meas);
+                auto st = mKF->getStateVec();
                 mEstimatedTrajHistory.push_back({st[0], st[1]});
                 mSimParamsUptr->mGpsUpdateRemTime += 1.0 / mSimParamsUptr->mGpsUpdateRate;
             }

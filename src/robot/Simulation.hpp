@@ -58,7 +58,7 @@ private:
     std::unique_ptr<SimulationParams> mSimParamsUptr;
     std::unique_ptr<Grid> mGrid;
     std::shared_ptr<Robot> mRobotSptr;
-    std::shared_ptr<LinearKalmanFilter> mkf;
+    std::shared_ptr<KalmanFilterBase> mKF;
     std::shared_ptr<GPSSensor> mGPSSensor;
     std::vector<Point2D> mTrueTrajHistory;
     std::vector<Point2D> mEstimatedTrajHistory;
