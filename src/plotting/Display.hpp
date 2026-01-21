@@ -41,7 +41,7 @@ public:
     void resetDisplay();
 
     void generateGrid();
-    void renderGrid();
+    void renderGrid(int x, int y);
 
 private:
     int mScreenWidth;

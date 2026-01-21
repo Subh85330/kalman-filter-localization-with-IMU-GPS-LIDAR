@@ -9,8 +9,9 @@ Display::Display() : mScreenWidth(1060), mScreenHeight(980), mIsRunning(1), mVie
     {
         std::cout << "Window not created " << SDL_GetError() << std::endl;
     }
-    mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+    mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
     SDL_Init(SDL_INIT_VIDEO);
+    generateGrid();
 }
 
 Display::~Display()
@@ -148,14 +149,20 @@ void Display::generateGrid()
     SDL_SetRenderTarget(mRenderer, gridTexture);
 
     // Set the grid line color
-    SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255); // Lighter grey lines
+    // SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray
+    // SDL_RenderClear(mRenderer);
 
-    int cellSize = 100; // Example cell size
+    SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255); // grid color
+    int cellSize = 100;                                 // Example cell size
     double mGridSize = 1000;
     // Draw vertical lines
-    for (double x = 0; x < 500; x += cellSize)
+    for (double x = 0; x < mScreenWidth; x += cellSize)
     {
-        drawLine({x, 0}, {x, 500});
+        drawLine({x, 0}, {x, mScreenHeight});
+    }
+    for (double y = 0; y < mScreenHeight; y += cellSize)
+    {
+        drawLine({0, y}, {mScreenWidth, y});
     }
 
     // // Draw horizontal lines
@@ -177,7 +184,15 @@ void Display::generateGrid()
     // SDL_RenderPresent(renderer);
 }
 
-void Display::renderGrid()
+void Display::renderGrid(int _x, int _y)
 {
-    SDL_RenderCopy(mRenderer, gridTexture, NULL, NULL);
+    SDL_Rect dst;
+    // dst.x = (mViewYOffset- mViewWidth / 2);
+    // dst.y = (mViewXOffset- mViewHeight / 2);
+    auto pt = transformPoint({600,-380});
+    dst.x =pt.x;
+    dst.y = pt.y;
+    dst.w = mScreenWidth;
+    dst.h = mScreenWidth;
+    SDL_RenderCopy(mRenderer, gridTexture, NULL, &dst); // study this function what is srcrect and what is dstrect
 }

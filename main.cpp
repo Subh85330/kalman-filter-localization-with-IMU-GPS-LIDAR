@@ -18,7 +18,8 @@ int main()
     {
         sim->update();
         disp->resetDisplay();
-        disp->setDrawColor(0, 0, 0, 0);
+        disp->renderGrid(0,0);
+        disp->setDrawColor(0, 0, 0, 255);
         sim->render(disp);
         disp->showDisplay();
         // disp->processInput();

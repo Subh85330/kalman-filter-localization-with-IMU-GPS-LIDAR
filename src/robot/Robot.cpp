@@ -1,6 +1,6 @@
 #include "Robot.hpp"
 
-Robot::Robot() : mBicycleModel(),mRobotCurrentState(100,100,0)
+Robot::Robot() : mBicycleModel(),mRobotCurrentState(0,0,0)
 {
     mRobotLength = 50.0;
     mRobotWidth = 30.0;
@@ -60,6 +60,7 @@ void Robot::update(double dt)
 
 void Robot::render(std::shared_ptr<Display> disp)
 { 
+    disp->setDrawColor(0,0,0,255);
     disp->drawLines(transformPoints(mRobotBody, mRobotCurrentState.x, mRobotCurrentState.y, mRobotCurrentState.theta));
     disp->drawLines(transformPoints(transformPoints(mWheelDims, mRRWheelOffset), mRobotCurrentState.x, mRobotCurrentState.y, mRobotCurrentState.theta));
     disp->drawLines(transformPoints(transformPoints(mWheelDims, mLRWheelOffset), mRobotCurrentState.x, mRobotCurrentState.y, mRobotCurrentState.theta));
