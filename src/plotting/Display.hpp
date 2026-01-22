@@ -44,8 +44,8 @@ public:
     void renderGrid(int x, int y);
 
 private:
-    int mScreenWidth;
-    int mScreenHeight;
+    double mScreenWidth;
+    double mScreenHeight;
 
     double mViewWidth;
     double mViewHeight;

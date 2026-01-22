@@ -1,24 +1,39 @@
 #include <iostream>
 #include "src/plotting/Display.hpp"
 #include <thread>
+// #include "src/utility.hpp"
 // #include "src/robot/Robot.hpp"
 #include "src/robot/Simulation.hpp"
 void AtExit()
 {
     std::cout << "End Of Program!!!!\n";
 }
+int GRID_SIZE = 500;
+int GRID_SPACEING = 25;
 
 int main()
 {
     std::atexit(AtExit);
+    std::cout << __cplusplus << std::endl;
     auto sim = std::make_shared<Simulation>();
     std::shared_ptr<Display> disp = std::make_shared<Display>();
 
+    
     while (disp->getIsRunning())
     {
         sim->update();
         disp->resetDisplay();
-        disp->renderGrid(0,0);
+        // Draw Background Grid
+        disp->setDrawColor(0, 0, 0,255);
+        for (int x = -GRID_SIZE; x <= GRID_SIZE; x += GRID_SPACEING)
+        {
+            disp->drawLine(Point2D(x, -GRID_SIZE), Point2D(x, GRID_SIZE));
+        }
+        for (int y = -GRID_SIZE; y <= GRID_SIZE; y += GRID_SPACEING)
+        {
+            disp->drawLine(Point2D(-GRID_SIZE, y), Point2D(GRID_SIZE, y));
+        }
+
         disp->setDrawColor(0, 0, 0, 255);
         sim->render(disp);
         disp->showDisplay();

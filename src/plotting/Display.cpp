@@ -143,7 +143,7 @@ void Display::resetDisplay()
 
 void Display::generateGrid()
 {
-    gridTexture = SDL_CreateTexture(mRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, mScreenWidth, mScreenHeight);
+    gridTexture = SDL_CreateTexture(mRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 10*mScreenWidth, 10*mScreenHeight);
 
     // Set the render target to the texture
     SDL_SetRenderTarget(mRenderer, gridTexture);
@@ -155,15 +155,15 @@ void Display::generateGrid()
     SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255); // grid color
     int cellSize = 100;                                 // Example cell size
     double mGridSize = 1000;
-    // Draw vertical lines
-    for (double x = 0; x < mScreenWidth; x += cellSize)
+    // Draw Horizontal lines
+    for (double x = 0; x < 10*mScreenWidth; x += cellSize)
     {
-        drawLine({x, 0}, {x, mScreenHeight});
+        drawLine({x, 0}, {x, 10*mScreenHeight});
     }
-    for (double y = 0; y < mScreenHeight; y += cellSize)
-    {
-        drawLine({0, y}, {mScreenWidth, y});
-    }
+    // for (double y = 0; y <10*mScreenHeight; y += cellSize)
+    // {
+    //     drawLine({0, y}, {10*mScreenWidth, y});
+    // }
 
     // // Draw horizontal lines
     // for (int y = 0; y < mScreenWidth; y += cellSize)
@@ -192,7 +192,7 @@ void Display::renderGrid(int _x, int _y)
     auto pt = transformPoint({600,-380});
     dst.x =pt.x;
     dst.y = pt.y;
-    dst.w = mScreenWidth;
-    dst.h = mScreenWidth;
+    dst.w = 10*mScreenWidth;
+    dst.h = 10*mScreenWidth;
     SDL_RenderCopy(mRenderer, gridTexture, NULL, &dst); // study this function what is srcrect and what is dstrect
 }
