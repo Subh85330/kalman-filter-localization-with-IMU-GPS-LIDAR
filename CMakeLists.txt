@@ -13,6 +13,7 @@ set(SRC_CPP
     src/kalmanFilters/KalmanFilterBase.cpp
     src/kalmanFilters/LinearKalmanFilter.cpp
     src/kalmanFilters/ExtendedKF.cpp
+    src/kalmanFilters/UnscentedKF.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SRC_CPP})
