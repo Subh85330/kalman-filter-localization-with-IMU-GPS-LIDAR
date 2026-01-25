@@ -10,16 +10,25 @@ Display::Display() : mScreenWidth(1060), mScreenHeight(980), mIsRunning(1), mVie
         std::cout << "Window not created " << SDL_GetError() << std::endl;
     }
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+    
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
+    mFontMain = TTF_OpenFont("Roboto-Regular.ttf",20);
+    if(!mFontMain)
+    {
+        std::cout<<"mFontMain Not Available "<<TTF_GetError()<<std::endl;
+    }
     generateGrid();
 }
 
 Display::~Display()
 {
+    TTF_CloseFont(mFontMain);
     SDL_DestroyTexture(gridTexture);
     gridTexture = NULL;
     SDL_DestroyRenderer(mRenderer);
     SDL_DestroyWindow(mWindow);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -86,6 +95,37 @@ void Display::drawLines(const std::vector<std::vector<Point2D>> &dataPoint2D)
             drawLines(dataPoint2D[i]);
         }
     }
+}
+
+void Display::drawText(const std::string text, const Point2D pos, const double scale, const SDL_Color color, bool isCentered)
+{
+    SDL_Surface* surface = TTF_RenderText_Blended(mFontMain,text.c_str(), color);
+    if(!surface)
+    {
+        std::cout<<"Surface not availabel \n";
+        return;
+    }
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(mRenderer, surface);
+    if(!texture)
+    {
+        std::cout<<"texture not available \n";
+        return;
+    }
+    int width = surface->w*scale;
+    int height = surface->h*scale;
+    int x = pos.x;
+    int y = pos.y;
+    // if(isCentered)
+    // {
+    //     x-=width/2;
+    //     y-=height/2;
+        
+    // }
+    SDL_Rect renderQuad = {x,y,width,height};
+    SDL_RenderCopy(mRenderer, texture,nullptr,&renderQuad);
+
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
 
 Point2D Display::transformPoint(Point2D point)

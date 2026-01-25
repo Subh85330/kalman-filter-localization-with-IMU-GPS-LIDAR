@@ -18,5 +18,10 @@ set(SRC_CPP
 
 add_executable(${PROJECT_NAME} main.cpp ${SRC_CPP})
 
-target_link_libraries(${PROJECT_NAME} SDL2 Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} SDL2 Eigen3::Eigen SDL2 SDL2_ttf)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets/fonts/ $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    

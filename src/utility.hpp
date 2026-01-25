@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <string>
+#include <memory>
+
 struct Point2D
 {
     double x,y;
@@ -11,3 +14,13 @@ double wrapAngle(double angle);
 
 std::vector<Point2D> transformPoints(std::vector<Point2D> points, double x, double y, double rot);
 std::vector<Point2D> transformPoints(std::vector<Point2D> points, Point2D point, double rot=0);
+
+template<typename ... Params>
+std::string stringFormat(const std::string& format, Params ... params)
+{
+    size_t size = snprintf(nullptr, 0, format.c_str(), params ...)+1;
+    if(size <=0){throw std::runtime_error("Error during formating.");}
+    std::unique_ptr<char[]> buff(new char[size]);
+    snprintf(buff.get(), size, format.c_str(), params ...);
+    return std::string(buff.get(), buff.get()+size);
+}

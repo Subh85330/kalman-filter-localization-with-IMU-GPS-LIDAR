@@ -92,4 +92,8 @@ void Simulation::render(std::shared_ptr<Display> disp)
     disp->drawLines(mTrueTrajHistory);
     disp->setDrawColor(255, 0, 0, 255);
     disp->drawLines(mEstimatedTrajHistory);
+
+    std::string timeString = stringFormat("Time: %0.2f", mSimParamsUptr->mTimeNow);
+    disp->drawText(timeString, Point2D{0,0},1.0,{0,0,0},0);
+
 }

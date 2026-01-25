@@ -8,8 +8,8 @@ void AtExit()
 {
     std::cout << "End Of Program!!!!\n";
 }
-int GRID_SIZE = 500;
-int GRID_SPACEING = 25;
+int GRID_SIZE = 600;
+int GRID_SPACEING = 50;
 
 int main()
 {

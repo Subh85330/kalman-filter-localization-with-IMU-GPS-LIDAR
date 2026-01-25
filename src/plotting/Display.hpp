@@ -3,9 +3,10 @@
 // System
 #include <memory>
 #include <vector>
-
+#include <string>
 // External
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 // User Defined
 #include "../utility.hpp"
@@ -30,7 +31,7 @@ public:
     void drawLine(const Point2D &startPos, const Point2D &endPos);
     void drawLines(const std::vector<Point2D> &dataPoint2D);
     void drawLines(const std::vector<std::vector<Point2D>> &dataPoint2D);
-
+    void drawText(const std::string text, const Point2D ps, const double scale, const SDL_Color color, bool isCentered);
     Point2D transformPoint(Point2D point);
 
     void setView(double width, double height, double xOffSet, double yOffset);
@@ -54,6 +55,7 @@ private:
 
     SDL_Window *mWindow;
     SDL_Renderer *mRenderer;
+    TTF_Font *mFontMain;
     SDL_Texture *gridTexture;
     
     bool mIsRunning;
