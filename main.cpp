@@ -81,6 +81,15 @@ int main()
                 case SDLK_EQUALS:
                     sim->increaseViewSize();
                     break;
+                case SDLK_RIGHTBRACKET:
+                    sim->increaseTimeMultiplier();
+                    break;
+                case SDLK_LEFTBRACKET:
+                    sim->decreaseTimeMultiplier();
+                    break;
+                case SDLK_r:
+                    sim->reset();
+                    break;
 
                 default:
                     break;

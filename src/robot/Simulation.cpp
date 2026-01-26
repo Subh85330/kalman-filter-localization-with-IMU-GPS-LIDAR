@@ -3,7 +3,7 @@
 
 #include "../kalmanFilters/ExtendedKF.hpp"
 
-Simulation::Simulation() : mViewSize(1000), mSimStatus(SimStatus::NOT_STARTED)
+Simulation::Simulation() : mViewSize(1000), mSimStatus(SimStatus::NOT_STARTED), mTimeNow(0.0), mTimeMultiplier(1)
 {
     mSimParamsUptr = std::make_unique<SimulationParams>();
     mGrid = std::make_unique<Grid>();
@@ -18,34 +18,37 @@ void Simulation::update()
 {
     if (!mIsPaused)
     {
-        mRobotSptr->update(mSimParamsUptr->mTimeStep);
-        RobotState robotCurrentState = mRobotSptr->getRobotCurrentState();
-        mTrueTrajHistory.push_back({robotCurrentState.x, robotCurrentState.y});
-
-        if (mSimParamsUptr->mGyroEnabled)
+        for (int i = 0; i < mTimeMultiplier; ++i)
         {
-            if (mSimParamsUptr->mGyroUpdateRemTime <= 0)
-            {
-                mKF->predictionStep(mSimParamsUptr->mTimeStep);
-                mSimParamsUptr->mGyroUpdateRate += 1.0 / mSimParamsUptr->mGyroUpdateRate;
-            }
-            mSimParamsUptr->mGyroUpdateRemTime -= mSimParamsUptr->mTimeStep;
-        }
+            mRobotSptr->update(mSimParamsUptr->mTimeStep);
+            RobotState robotCurrentState = mRobotSptr->getRobotCurrentState();
+            mTrueTrajHistory.push_back({robotCurrentState.x, robotCurrentState.y});
 
-        if (mSimParamsUptr->mGyroEnabled)
-        {
-            if (mSimParamsUptr->mGpsUpdateRemTime <= 0)
+            if (mSimParamsUptr->mGyroEnabled)
             {
-                auto meas = mGPSSensor->generateGPSMeasurements(robotCurrentState.x, robotCurrentState.y);
-                mKF->handleGPSMeasurement(meas);
-                auto st = mKF->getStateVec();
-                mEstimatedTrajHistory.push_back({st[0], st[1]});
-                mSimParamsUptr->mGpsUpdateRemTime += 1.0 / mSimParamsUptr->mGpsUpdateRate;
+                if (mSimParamsUptr->mGyroUpdateRemTime <= 0)
+                {
+                    mKF->predictionStep(mSimParamsUptr->mTimeStep);
+                    mSimParamsUptr->mGyroUpdateRate += 1.0 / mSimParamsUptr->mGyroUpdateRate;
+                }
+                mSimParamsUptr->mGyroUpdateRemTime -= mSimParamsUptr->mTimeStep;
             }
-            mSimParamsUptr->mGpsUpdateRemTime -= mSimParamsUptr->mTimeStep;
-        }
 
-        mSimParamsUptr->mTimeNow += mSimParamsUptr->mTimeStep;
+            if (mSimParamsUptr->mGyroEnabled)
+            {
+                if (mSimParamsUptr->mGpsUpdateRemTime <= 0)
+                {
+                    auto meas = mGPSSensor->generateGPSMeasurements(robotCurrentState.x, robotCurrentState.y);
+                    mKF->handleGPSMeasurement(meas);
+                    auto st = mKF->getStateVec();
+                    mEstimatedTrajHistory.push_back({st[0], st[1]});
+                    mSimParamsUptr->mGpsUpdateRemTime += 1.0 / mSimParamsUptr->mGpsUpdateRate;
+                }
+                mSimParamsUptr->mGpsUpdateRemTime -= mSimParamsUptr->mTimeStep;
+            }
+
+            mTimeNow += mSimParamsUptr->mTimeStep;
+        }
     }
 }
 void Simulation::setVelocity(const double &vel)
@@ -68,6 +71,17 @@ void Simulation::decreaseViewSize()
     if (mViewSize < 3000)
     {
         mViewSize += 25;
+    }
+}
+void Simulation::increaseTimeMultiplier()
+{
+    mTimeMultiplier += 1;
+}
+void Simulation::decreaseTimeMultiplier()
+{
+    if (mTimeMultiplier > 1)
+    {
+        mTimeMultiplier -= 1;
     }
 }
 void Simulation::togglePause()
@@ -93,7 +107,13 @@ void Simulation::render(std::shared_ptr<Display> disp)
     disp->setDrawColor(255, 0, 0, 255);
     disp->drawLines(mEstimatedTrajHistory);
 
-    std::string timeString = stringFormat("Time: %0.2f", mSimParamsUptr->mTimeNow);
-    disp->drawText(timeString, Point2D{0,0},1.0,{0,0,0},0);
+    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier %d", mTimeNow, mTimeMultiplier);
+    disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
+}
 
+void Simulation::reset()
+{
+    std::cout << " Sim Reset called. \n";
+    mTimeNow = 0;
+    mTimeMultiplier = 0;
 }
