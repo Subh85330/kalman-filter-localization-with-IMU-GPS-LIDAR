@@ -31,4 +31,6 @@ private:
     Point2D mLRWheelOffset;
     Point2D mRRWheelOffset;
 
+    double mMaxVel, mMaxAcc, mMaxSteer;
+
 };

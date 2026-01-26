@@ -107,13 +107,23 @@ void Simulation::render(std::shared_ptr<Display> disp)
     disp->setDrawColor(255, 0, 0, 255);
     disp->drawLines(mEstimatedTrajHistory);
 
-    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier %d", mTimeNow, mTimeMultiplier);
+    double xOffset = 100;
+    double yOffset = 30;
+    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier: %d", mTimeNow, mTimeMultiplier);
     disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
+
+
+    std::string velString = stringFormat("Velocity: %0.2f ", mRobotSptr->getVelocity());
+    std::string steerString = stringFormat("Steering: %0.2f ", mRobotSptr->getSteering());
+    disp->drawText(velString, Point2D{mViewSize-xOffset, 0});
+    disp->drawText(steerString, Point2D{mViewSize-xOffset, yOffset}, 1.0, {0, 0, 0}, 0);
+
+
 }
 
 void Simulation::reset()
 {
     std::cout << " Sim Reset called. \n";
     mTimeNow = 0;
-    mTimeMultiplier = 0;
+    mTimeMultiplier = 1;
 }
