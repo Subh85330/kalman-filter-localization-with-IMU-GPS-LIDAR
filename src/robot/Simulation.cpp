@@ -49,7 +49,7 @@ void Simulation::update()
 
             mTimeNow += mSimParamsUptr->mTimeStep;
             mClock.increaseTime(0,0,mSimParamsUptr->mTimeStep);
-
+            mClock.formatTime();
         }
     }
 }

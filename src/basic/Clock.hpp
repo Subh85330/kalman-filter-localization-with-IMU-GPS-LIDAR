@@ -2,6 +2,7 @@
 #include <memory>
 #include "../plotting/Display.hpp"
 
+
 struct Time
 {
     double hours, mins, secs;
@@ -20,6 +21,7 @@ public:
     Time getTime() const;
     void increaseTime(double hours, double mins, double secs);
     void decreaseTime(double hours, double mins, double secs);
+    void formatTime();
     void render(std::shared_ptr<Display> disp);
 
 private:
