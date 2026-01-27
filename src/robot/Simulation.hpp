@@ -57,7 +57,7 @@ private:
     bool mIsPaused;
     double mViewSize;
     double mTimeNow;
-    Time mcTimeNow;
+    Clock mClock;
     int mTimeMultiplier;
     std::unique_ptr<SimulationParams> mSimParamsUptr;
     std::unique_ptr<Grid> mGrid;

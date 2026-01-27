@@ -48,8 +48,7 @@ void Simulation::update()
             }
 
             mTimeNow += mSimParamsUptr->mTimeStep;
-            mcTimeNow.secs += mSimParamsUptr->mTimeStep;
-            
+            mClock.increaseTime(0,0,mSimParamsUptr->mTimeStep);
 
         }
     }
@@ -110,10 +109,10 @@ void Simulation::render(std::shared_ptr<Display> disp)
     disp->setDrawColor(255, 0, 0, 255);
     disp->drawLines(mEstimatedTrajHistory);
 
+    mClock.render(disp);
     double xOffset = 100;
     double yOffset = 30;
-    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier: %d", mcTimeNow.secs, mTimeMultiplier);
-    disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
+    
 
 
     std::string velString = stringFormat("Velocity: %0.2f ", mRobotSptr->getVelocity());
