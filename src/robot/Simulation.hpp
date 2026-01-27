@@ -3,6 +3,7 @@
 #include "Robot.hpp"
 #include "sensors/GPSSensor.hpp"
 #include "../plotting/Grid.hpp"
+#include "../basic/Clock.hpp"
 
 enum class SimStatus
 {
@@ -56,6 +57,7 @@ private:
     bool mIsPaused;
     double mViewSize;
     double mTimeNow;
+    Time mcTimeNow;
     int mTimeMultiplier;
     std::unique_ptr<SimulationParams> mSimParamsUptr;
     std::unique_ptr<Grid> mGrid;

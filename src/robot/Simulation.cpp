@@ -48,6 +48,9 @@ void Simulation::update()
             }
 
             mTimeNow += mSimParamsUptr->mTimeStep;
+            mcTimeNow.secs += mSimParamsUptr->mTimeStep;
+            
+
         }
     }
 }
@@ -109,7 +112,7 @@ void Simulation::render(std::shared_ptr<Display> disp)
 
     double xOffset = 100;
     double yOffset = 30;
-    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier: %d", mTimeNow, mTimeMultiplier);
+    std::string timeString = stringFormat("Time: %0.2f TimeMultiplier: %d", mcTimeNow.secs, mTimeMultiplier);
     disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
 
 
