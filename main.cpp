@@ -8,8 +8,8 @@ void AtExit()
 {
     std::cout << "End Of Program!!!!\n";
 }
-int GRID_SIZE = 600;
-int GRID_SPACEING = 50;
+int GRID_SIZE = 2000;
+int GRID_SPACEING = 100;
 
 int main()
 {
@@ -24,7 +24,7 @@ int main()
         sim->update();
         disp->resetDisplay();
         // Draw Background Grid
-        disp->setDrawColor(0, 0, 0,255);
+        disp->setDrawColor(88, 88, 88,10);
         for (int x = -GRID_SIZE; x <= GRID_SIZE; x += GRID_SPACEING)
         {
             disp->drawLine(Point2D(x, -GRID_SIZE), Point2D(x, GRID_SIZE));

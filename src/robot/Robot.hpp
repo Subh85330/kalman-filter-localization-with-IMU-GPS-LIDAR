@@ -16,7 +16,7 @@ public:
     double getSteering();
     RobotState getRobotCurrentState() const;
     void update(double dt);
-    void render(std::shared_ptr<Display> disp);
+    void render(const std::shared_ptr<Display>& disp);
 
 private:
     double mRobotLength;

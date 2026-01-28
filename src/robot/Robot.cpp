@@ -65,7 +65,7 @@ void Robot::update(double dt)
     mRobotCurrentState = mBicycleModel.getRobotState();
 }
 
-void Robot::render(std::shared_ptr<Display> disp)
+void Robot::render(const std::shared_ptr<Display>& disp)
 {
     disp->setDrawColor(0, 0, 0, 255);
     disp->drawLines(transformPoints(mRobotBody, mRobotCurrentState.x, mRobotCurrentState.y, mRobotCurrentState.theta));

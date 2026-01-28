@@ -23,7 +23,7 @@ void Grid::generateGrid(double centerX, double centerY)
 
 }
 
-void Grid::render(const std::shared_ptr<Display> disp, double x, double y)
+void Grid::render(const std::shared_ptr<Display>& disp, double x, double y)
 {
     generateGrid(x,y);
     disp->drawLines(mGrid);

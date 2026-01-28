@@ -18,14 +18,19 @@ public:
     Clock(/* args */);
     ~Clock();
     void setTime(double hours, double mins, double secs);
+    void decreaseTimeMultiplier();
+    void increaseTimeMultiplier();
+
     Time getTime() const;
+    int getTimeMultiplier() const;
+
     void increaseTime(double hours, double mins, double secs);
     void decreaseTime(double hours, double mins, double secs);
     void formatTime();
-    void render(std::shared_ptr<Display> disp);
-
+    void render(const std::shared_ptr<Display>& disp);
+    void reset();
 private:
     /* data */
     Time mTime;
-    int mTimemultiplier;
+    int mTimeMultiplier;
 };

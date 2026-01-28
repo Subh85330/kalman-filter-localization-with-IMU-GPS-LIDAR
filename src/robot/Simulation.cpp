@@ -3,7 +3,7 @@
 
 #include "../kalmanFilters/ExtendedKF.hpp"
 
-Simulation::Simulation() : mViewSize(1000), mSimStatus(SimStatus::NOT_STARTED), mTimeNow(0.0), mTimeMultiplier(1)
+Simulation::Simulation() : mViewSize(1000), mSimStatus(SimStatus::NOT_STARTED), mTimeNow(0.0), mTimeMultiplier(1), mIsPaused(true)
 {
     mSimParamsUptr = std::make_unique<SimulationParams>();
     mGrid = std::make_unique<Grid>();
@@ -81,10 +81,7 @@ void Simulation::increaseTimeMultiplier()
 }
 void Simulation::decreaseTimeMultiplier()
 {
-    if (mTimeMultiplier > 1)
-    {
-        mTimeMultiplier -= 1;
-    }
+    
 }
 void Simulation::togglePause()
 {
@@ -98,7 +95,7 @@ double Simulation::getSteering() const
 {
     return mRobotSptr->getSteering();
 }
-void Simulation::render(std::shared_ptr<Display> disp)
+void Simulation::render(const std::shared_ptr<Display>& disp)
 {
     // disp->renderGrid(mRobotSptr->getRobotCurrentState().x, mRobotSptr->getRobotCurrentState().y);
     mRobotSptr->render(disp);
@@ -125,7 +122,12 @@ void Simulation::render(std::shared_ptr<Display> disp)
 
 void Simulation::reset()
 {
-    std::cout << " Sim Reset called. \n";
+    
     mTimeNow = 0;
     mTimeMultiplier = 1;
+    mTrueTrajHistory.clear();
+    mEstimatedTrajHistory.clear();
+
+
+    mClock.reset();
 }

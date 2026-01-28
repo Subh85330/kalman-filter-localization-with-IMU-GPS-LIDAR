@@ -24,7 +24,7 @@ struct SimulationParams
     bool mGpsEnabled;
 
     SimulationParams()
-        : mTimeStep(0.1),
+        : mTimeStep(0.5),
           mGyroUpdateRate(10.0), mGyroUpdateRemTime(0.0), mGyroEnabled(true),
           mGpsUpdateRate(1.0), mGpsUpdateRemTime(0.0), mGpsEnabled(true)
     {
@@ -49,7 +49,7 @@ public:
     double getVelocity() const;
     double getSteering() const;
 
-    void render(std::shared_ptr<Display> disp);
+    void render(const std::shared_ptr<Display>& disp);
     void reset();
 
 private:

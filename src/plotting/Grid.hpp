@@ -16,5 +16,5 @@ public:
     ~Grid();
     void generateGrid(double centerX, double centerY);
 
-    void render(const std::shared_ptr<Display> disp, double x, double y);
+    void render(const std::shared_ptr<Display>& disp, double x, double y);
 };

@@ -1,7 +1,7 @@
 #include "Clock.hpp"
 #include "../utility.hpp"
 
-Clock::Clock(/* args */) : mTimemultiplier(1)
+Clock::Clock(/* args */) : mTimeMultiplier(1)
 {
 
 }
@@ -17,9 +17,26 @@ void Clock::setTime(double hours, double mins, double secs)
     mTime.secs = secs;
 }
 
+void Clock::decreaseTimeMultiplier()
+{
+    if (mTimeMultiplier > 1)
+    {
+        mTimeMultiplier -= 1;
+    }
+}
+void Clock::increaseTimeMultiplier()
+{
+    mTimeMultiplier+=1;
+}
+
 Time Clock::getTime() const
 {
     return mTime;
+}
+
+int Clock::getTimeMultiplier() const
+{
+    return mTimeMultiplier;
 }
 
 void Clock::increaseTime(double hours, double mins, double secs)
@@ -52,8 +69,16 @@ void Clock::formatTime()
     
 }
 
-void Clock::render(std::shared_ptr<Display> disp)
+void Clock::render(const std::shared_ptr<Display>& disp)
 {
-    std::string timeString = stringFormat("Time %0.2f:%0.2f:%0.2f TimeMultiplier: %d", mTime.hours, mTime.mins, mTime.secs, mTimemultiplier);
+    std::string timeString = stringFormat("Time %0.2f:%0.2f:%0.2f TimeMultiplier: %d", mTime.hours, mTime.mins, mTime.secs, mTimeMultiplier);
     disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
+}
+
+void Clock::reset()
+{   
+    mTime.secs=0;
+    mTime.hours=0;
+    mTime.mins=0;
+    mTimeMultiplier=1;
 }
