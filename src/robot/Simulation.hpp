@@ -4,6 +4,7 @@
 #include "sensors/GPSSensor.hpp"
 #include "../plotting/Grid.hpp"
 #include "../basic/Clock.hpp"
+#include "../basic/Shapes.hpp"
 
 enum class SimStatus
 {
@@ -25,8 +26,8 @@ struct SimulationParams
 
     SimulationParams()
         : mTimeStep(0.5),
-          mGyroUpdateRate(10.0), mGyroUpdateRemTime(0.0), mGyroEnabled(true),
-          mGpsUpdateRate(1.0), mGpsUpdateRemTime(0.0), mGpsEnabled(true)
+          mGyroUpdateRate(0.10), mGyroUpdateRemTime(0.0), mGyroEnabled(true),
+          mGpsUpdateRate(0.01), mGpsUpdateRemTime(0.0), mGpsEnabled(true)
     {
     }
 };

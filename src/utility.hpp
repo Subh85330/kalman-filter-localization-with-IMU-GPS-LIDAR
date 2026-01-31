@@ -12,7 +12,7 @@ struct Point2D
 };
 double wrapAngle(double angle);
 
-std::vector<Point2D> transformPoints(std::vector<Point2D> points, double x, double y, double rot);
+std::vector<Point2D> transformPoints(std::vector<Point2D> points, double x, double y, double rot=0.0);
 std::vector<Point2D> transformPoints(std::vector<Point2D> points, Point2D point, double rot=0);
 
 template<typename ... Params>

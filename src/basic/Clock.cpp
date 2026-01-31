@@ -71,8 +71,10 @@ void Clock::formatTime()
 
 void Clock::render(const std::shared_ptr<Display>& disp)
 {
-    std::string timeString = stringFormat("Time %0.2f:%0.2f:%0.2f TimeMultiplier: %d", mTime.hours, mTime.mins, mTime.secs, mTimeMultiplier);
-    disp->drawText(timeString, Point2D{0, 0}, 1.0, {0, 0, 0}, 0);
+    std::string timeString = stringFormat("Time %0.2f:%0.2f:%0.2f", mTime.hours, mTime.mins, mTime.secs);
+    disp->drawText(timeString, Point2D{0, 0});
+    std::string multiplier = stringFormat("TimeMultiplier: %d", mTimeMultiplier);
+    disp->drawText(multiplier, Point2D{0, 30});
 }
 
 void Clock::reset()

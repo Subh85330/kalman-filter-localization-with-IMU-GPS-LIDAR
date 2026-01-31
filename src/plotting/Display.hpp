@@ -26,7 +26,10 @@ public:
     SDL_Window *getWindow() const;
     SDL_Renderer *getRenderer() const;
     bool getIsRunning() const;
+    double getScreenWidth() const;
+    double getScreenHeight() const;
     double getScreenAspectRation() const;
+
 
     void drawLine(const Point2D &startPos, const Point2D &endPos);
     void drawLines(const std::vector<Point2D> &dataPoint2D);

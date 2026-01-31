@@ -48,11 +48,12 @@ void Simulation::update()
             }
 
             mTimeNow += mSimParamsUptr->mTimeStep;
-            mClock.increaseTime(0,0,mSimParamsUptr->mTimeStep);
+            mClock.increaseTime(0, 0, mSimParamsUptr->mTimeStep);
             mClock.formatTime();
         }
     }
 }
+
 void Simulation::setVelocity(const double &vel)
 {
     mRobotSptr->setVelocity(vel);
@@ -81,7 +82,6 @@ void Simulation::increaseTimeMultiplier()
 }
 void Simulation::decreaseTimeMultiplier()
 {
-    
 }
 void Simulation::togglePause()
 {
@@ -95,39 +95,36 @@ double Simulation::getSteering() const
 {
     return mRobotSptr->getSteering();
 }
-void Simulation::render(const std::shared_ptr<Display>& disp)
+void Simulation::render(const std::shared_ptr<Display> &disp)
 {
     // disp->renderGrid(mRobotSptr->getRobotCurrentState().x, mRobotSptr->getRobotCurrentState().y);
     mRobotSptr->render(disp);
     disp->setView(mViewSize * disp->getScreenAspectRation(), mViewSize, mRobotSptr->getRobotCurrentState().x, mRobotSptr->getRobotCurrentState().y);
     // mGrid->render(disp, mRobotSptr->getRobotCurrentState().x, mRobotSptr->getRobotCurrentState().y);
     disp->setDrawColor(0, 255, 0, 255);
+    disp->drawLines(transformPoints(shape1, mRobotSptr->getRobotCurrentState().x, mRobotSptr->getRobotCurrentState().y));
     disp->drawLines(mTrueTrajHistory);
     disp->setDrawColor(255, 0, 0, 255);
+    disp->drawLines(transformPoints(shape1, mKF->getPose()));
     disp->drawLines(mEstimatedTrajHistory);
 
     mClock.render(disp);
     double xOffset = 100;
     double yOffset = 30;
-    
-
 
     std::string velString = stringFormat("Velocity: %0.2f ", mRobotSptr->getVelocity());
     std::string steerString = stringFormat("Steering: %0.2f ", mRobotSptr->getSteering());
-    disp->drawText(velString, Point2D{mViewSize-xOffset, 0});
-    disp->drawText(steerString, Point2D{mViewSize-xOffset, yOffset}, 1.0, {0, 0, 0}, 0);
-
-
+    disp->drawText(velString, Point2D{disp->getScreenHeight() - xOffset,0});
+    disp->drawText(steerString, Point2D{disp->getScreenHeight() - xOffset, yOffset});
 }
 
 void Simulation::reset()
 {
-    
+
     mTimeNow = 0;
     mTimeMultiplier = 1;
     mTrueTrajHistory.clear();
     mEstimatedTrajHistory.clear();
-
 
     mClock.reset();
 }

@@ -63,6 +63,14 @@ bool Display::getIsRunning() const
 {
     return mIsRunning;
 }
+double Display::getScreenWidth() const
+{
+    return mScreenWidth;
+}
+double Display::getScreenHeight() const
+{
+    return mScreenHeight;
+}
 double Display::getScreenAspectRation() const
 {
     return mScreenWidth / mScreenHeight;

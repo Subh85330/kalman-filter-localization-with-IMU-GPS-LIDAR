@@ -1,6 +1,7 @@
 #pragma once
 #include <Eigen/Dense>
 #include "../robot/sensors/GPSSensor.hpp"
+#include "../utility.hpp"
 using Eigen::Vector2d;
 using Eigen::Vector4d;
 using Eigen::VectorXd;
@@ -23,6 +24,7 @@ public:
     virtual void predictionStep(const double &dt) = 0;
     virtual void handleGPSMeasurement(GPSMeasurement meas);
     bool getIsInitilized() const;
+    Point2D getPose() const;
 
 protected:
     void setStateVec(const VectorXd &stateVec);
@@ -30,6 +32,7 @@ protected:
 
 private:
     VectorXd mStateVec;
+    Point2D mEstPos;
     MatrixXd mCov;
     bool mIsInitilized;
 };
